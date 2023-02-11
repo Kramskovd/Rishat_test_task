@@ -12,6 +12,15 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
+
+API_PUBLIC_KEY = env('API_PUBLIC_KEY')
+API_PRIVATE_KEY = env('API_PRIVATE_KEY')
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,6 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+
+# Api keys stripe.com
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-7^+(q(k6(j07*ll=@^$syke11h+zqq)z5#v2@ey^z!z!6a_umj'
