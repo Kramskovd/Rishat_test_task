@@ -1,8 +1,25 @@
 from django.contrib import admin
 
-from .models import Item, Order
+from .models import Item, Order, Discount, Tax
 
-admin.site.register(Item)
-admin.site.register(Order)
 
-# Register your models here.
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ('id', 'item', 'description', 'price')
+
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', )
+
+
+class TaxAdmin(admin.ModelAdmin):
+    list_display = ('id', 'tax')
+
+
+class DiscountAdmin(admin.ModelAdmin):
+    list_display = ('id', 'discount')
+
+
+admin.site.register(Item, ItemAdmin)
+admin.site.register(Order, OrderAdmin)
+admin.site.register(Discount, DiscountAdmin)
+admin.site.register(Tax, TaxAdmin)

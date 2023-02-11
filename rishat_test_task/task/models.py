@@ -1,6 +1,7 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 
-# Create your models here.
+PERCENTAGE_VALIDATOR = [MinValueValidator(0), MaxValueValidator(100)]
 
 
 class Item(models.Model):
@@ -8,7 +9,22 @@ class Item(models.Model):
     description = models.TextField(verbose_name='Description')
     price = models.IntegerField(verbose_name='Price')
 
+    def __str__(self):
+        return self.item
+
 
 class Order(models.Model):
-    order_number = models.IntegerField(verbose_name='Order number')
-    item = models.ForeignKey('Item', on_delete=models.CASCADE, verbose_name='Item ID')
+    item = models.ManyToManyField(Item)
+
+    def __str__(self):
+        return "Order " + str(self.id)
+
+
+class Discount(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    discount = models.DecimalField(max_digits=3, decimal_places=0, default=0, validators=PERCENTAGE_VALIDATOR)
+
+
+class Tax(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    tax = models.DecimalField(max_digits=3, decimal_places=0, default=0, validators=PERCENTAGE_VALIDATOR)
